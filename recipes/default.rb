@@ -41,8 +41,8 @@ gem_package "rake" do
 end
 
 directory node.sensu.admin.base_path do
-  owner "sensu"
-  group "sensu"
+  owner node.sensu.admin.user
+  group node.sensu.admin.user
   mode '0755'
   recursive true
 end
@@ -56,8 +56,8 @@ end
     website/shared/bundle
     website/shared/pids }.each do |dir|
   directory "#{node.sensu.admin.base_path}/#{dir}" do
-    owner "sensu"
-    group "sensu"
+    owner node.sensu.admin.user
+    group node.sensu.admin.user
     mode '0755'
     recursive true
   end

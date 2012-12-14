@@ -1,6 +1,6 @@
 # admin
-default.sensu.admin.user = "sensu"
-default.sensu.admin.group = "sensu"
+default.sensu.admin.user = "sensu-admin"
+default.sensu.admin.group = "sensu-admin"
 default.sensu.admin.host = "localhost"
 default.sensu.admin.http_port = 80
 default.sensu.admin.https_port = 443

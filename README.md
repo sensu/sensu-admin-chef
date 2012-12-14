@@ -51,3 +51,13 @@ Installs sensu-admin rails app running on unicorn, front-ended by an nginx proxy
 `node.sensu.admin.release` - specifies revision of sensu-admin to deploy
 
 `node.sensu.admin.base_path` - path where sensu-admin will be deployed, defaults to '/opt/sensu/admin'
+
+## TODO
+
+* Consider using nginx and/or unicorn cookbooks to configure those components in a more flexible manner.
+
+* Instrument database configuration (allow choice of sqlite, mysql, etc.)
+
+* Run bundler with --without-mysql when using sqlite (then we can skip including mysql::ruby recipe)
+
+* Use LWRPs from database cookbook to configure database when using mysql or similar, and configure the app for that case

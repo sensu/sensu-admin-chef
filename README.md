@@ -68,7 +68,7 @@ Setup unicorn configuration and init scripts for sensu-admin
 
 `node.sensu.admin.base_path` - path where sensu-admin will be deployed, defaults to '/opt/sensu/admin'
 
-`node.sensu.admin.frontend` - 'nginx' or 'apache' for user facing http - defaults to 'nginx'
+`node.sensu.admin.frontend` - 'nginx', 'apache' or 'none' for user facing http - defaults to 'nginx'. 'none' does not install a frontend which could allow for integration with othe existing frontend proxys.
 
 ## TODO
 

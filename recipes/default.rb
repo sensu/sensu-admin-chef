@@ -62,7 +62,9 @@ end
 end
 
 # install frontend (default nginx)
-include_recipe "sensu-admin::#{node.sensu.admin.frontend}"
+unless node[:sensu][:admin][:frontend] = "none" do
+  include_recipe "sensu-admin::#{node.sensu.admin.frontend}"
+end
 
 # install unicorn 
 include_recipe "sensu-admin::unicorn"

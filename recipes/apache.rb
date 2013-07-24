@@ -44,7 +44,7 @@ template "#{node.sensu.admin.base_path}/sensu-admin-apache.conf" do
             :http_port => node.sensu.admin.http_port,
             :https_port => node.sensu.admin.https_port,
             :backend_port => node.sensu.admin.backend_port)
-  notifies :restart, resources(:service => "apache2"), :delayed
+  notifies :restart, "service[apache2]", :delayed
 end
 
 link "/etc/apache2/sites-available/sensu-admin.conf" do

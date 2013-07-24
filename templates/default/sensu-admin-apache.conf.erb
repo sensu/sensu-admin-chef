@@ -17,8 +17,8 @@
   ProxyPreserveHost On
 
   ProxyPass /assets/ !
-  ProxyPass / http://localhost:8888/
-  ProxyPassReverse / http://localhost:8888/
+  ProxyPass / http://localhost:<%= @backend_port -%>/
+  ProxyPassReverse / http://localhost:<%= @backend_port -%>/
 
   Alias /assets/ "<%= @base_path -%>/website/current/public/assets/"
 

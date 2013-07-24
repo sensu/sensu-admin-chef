@@ -36,7 +36,7 @@ template "#{node.sensu.admin.base_path}/sensu-admin-nginx.conf" do
             :http_port => node.sensu.admin.http_port,
             :https_port => node.sensu.admin.https_port,
             :backend_port => node.sensu.admin.backend_port)
-  notifies :restart, resources(:service => "nginx"), :delayed
+  notifies :restart, "service[nginx]", :delayed
 end
 
 link "/etc/nginx/sites-available/sensu-admin.conf" do

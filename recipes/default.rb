@@ -62,7 +62,7 @@ end
 end
 
 # install frontend (default nginx)
-unless node[:sensu][:admin][:frontend] = "none" do
+unless node[:sensu][:admin][:frontend] == "none"
   include_recipe "sensu-admin::#{node.sensu.admin.frontend}"
 end
 

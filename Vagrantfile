@@ -55,6 +55,12 @@ Vagrant::Config.run do |config|
         :server_root_password => 'rootpass',
         :server_debian_password => 'debpass',
         :server_repl_password => 'replpass'
+      },
+      :sensu => {
+         :admin => {
+            :frontend => 'nginx',
+            :host => '33.33.33.10',
+         }
       }
     }
 

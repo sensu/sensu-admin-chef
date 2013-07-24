@@ -21,7 +21,6 @@
 # If this is important to you - BACK IT UP, or use a SQL DB thats already backed up for you.
 #
 
-package "nginx"
 package "git"
 package "sqlite3"
 package "libsqlite3-dev"
@@ -34,7 +33,6 @@ user node.sensu.admin.user do
   system true
 end
 
-gem_package "unicorn"
 gem_package "bundler"
 gem_package "rake" do
   version "0.9.2.2"
@@ -63,102 +61,14 @@ end
   end
 end
 
-file "/etc/nginx/sites-enabled/default" do
-  action :delete
-end
+# install frontend (default nginx)
+include_recipe "sensu-admin::#{node.sensu.admin.frontend}"
 
-template "#{node.sensu.admin.base_path}/sensu-admin-unicorn.rb" do
-  user node.sensu.admin.user
-  group node.sensu.admin.user
-  source "sensu-admin-unicorn.rb.erb"
-  variables(:workers => node.cpu.total.to_i + 1,
-            :base_path => node.sensu.admin.base_path,
-            :backend_port => node.sensu.admin.backend_port)
-end
+# install unicorn 
+include_recipe "sensu-admin::unicorn"
 
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-end
-
-template "#{node.sensu.admin.base_path}/sensu-admin-nginx.conf" do
-  user node.sensu.admin.user
-  group node.sensu.admin.user
-  source "sensu-admin-nginx.conf.erb"
-  variables(:host => node.sensu.admin.host,
-            :base_path => node.sensu.admin.base_path,
-            :http_port => node.sensu.admin.http_port,
-            :https_port => node.sensu.admin.https_port,
-            :backend_port => node.sensu.admin.backend_port)
-  notifies :restart, resources(:service => "nginx"), :delayed
-end
-
-template "/etc/init.d/sensu-admin" do
-  source "unicorn.init.erb"
-  owner "root"
-  group "root"
-  mode "0755"
-  variables(:base_path => node.sensu.admin.base_path)
-end
-
-link "/etc/nginx/sites-available/sensu-admin.conf" do
-  to "#{node.sensu.admin.base_path}/sensu-admin-nginx.conf"
-end
-
-link "/etc/nginx/sites-enabled/sensu-admin.conf" do
-  to "/etc/nginx/sites-available/sensu-admin.conf"
-end
-
-ssl = data_bag_item("sensu", "ssl")
-
-file "#{node.sensu.admin.base_path}/server-cert.pem" do
-  content ssl["client"]["cert"]
-  mode 0644
-end
-
-file "#{node.sensu.admin.base_path}/server-key.pem" do
-  content ssl["client"]["key"]
-  mode 0600
-end
-
-deploy_revision "sensu-admin" do
-  action :deploy
-  repository node.sensu.admin.repo
-  revision node.sensu.admin.release
-  user node.sensu.admin.user
-  group node.sensu.admin.group
-  environment "RAILS_ENV" => "production"
-  deploy_to "#{node.sensu.admin.base_path}/website"
-  create_dirs_before_symlink %w{tmp tmp/cache}
-  purge_before_symlink %w{log}
-  symlink_before_migrate "db/production.sqlite3" => "db/production.sqlite3"
-  symlinks "log"=>"log"
-  shallow_clone false
-  enable_submodules true
-  before_migrate do
-    execute "bundle install --path #{node.sensu.admin.base_path}/website/shared/bundle" do
-      user "root"
-      cwd release_path
-    end
-  end
-  before_symlink do
-    execute "rake db:create" do
-      user node.sensu.admin.user
-      cwd release_path
-      not_if "test -f #{release_path}/db/production.sqlite3"
-    end
-    file "#{release_path}/db/production.sqlite3" do
-      user node.sensu.admin.user
-      mode "0600"
-      only_if "test -f #{release_path}/db/production.sqlite3"
-    end
-    execute "bundle exec whenever --update-crontab" do
-      cwd release_path
-      user node.sensu.admin.user
-    end
-  end
-  migrate true
-  migration_command "bundle exec rake db:migrate --trace >/tmp/migration.log 2>&1 && bundle exec rake assets:precompile && bundle exec rake db:seed"
-end
+# deploy sensu-admin code
+include_recipe "sensu-admin::deploy"
 
 service "sensu-admin" do
   supports :status => true, :restart => true, :reload => true

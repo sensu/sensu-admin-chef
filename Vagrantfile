@@ -58,7 +58,7 @@ Vagrant::Config.run do |config|
       },
       :sensu => {
          :admin => {
-            :frontend => 'nginx',
+            :frontend => 'apache',
             :host => '33.33.33.10',
          }
       }

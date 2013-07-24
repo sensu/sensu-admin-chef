@@ -55,6 +55,10 @@ link "/etc/apache2/sites-enabled/sensu-admin.conf" do
   to "/etc/apache2/sites-available/sensu-admin.conf"
 end
 
+link "/etc/apache2/mods-enabled/proxy_http.load" do
+  to "/etc/apache2/mods-available/proxy_http.load"
+end
+
 ssl = data_bag_item("sensu", "ssl")
 
 file "#{node.sensu.admin.base_path}/server-cert.pem" do

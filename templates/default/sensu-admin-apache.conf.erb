@@ -26,5 +26,8 @@
   SSLCertificateFile <%= @base_path -%>/server-cert.pem
   SSLCertificateKeyFile <%= @base_path -%>/server-key.pem
   SSLCACertificateFile <%= @base_path -%>/server-cacert.pem
+
+  CustomLog /var/log/apache2/sensu-admin-access.log combined
+  ErrorLog /var/log/apache2/sensu-admin-error.log
 </VirtualHost>
 

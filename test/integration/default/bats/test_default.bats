@@ -30,8 +30,3 @@
   run nc -z 0.0.0.0 8888
   [ $status -eq 0 ]
 }
-
-@test "http requests are redirected to https" {
-  run curl -s -k --head http://0.0.0.0
-  echo $output | grep "Location: https"
-}

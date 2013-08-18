@@ -4,16 +4,14 @@ Installs [sensu-admin](https://github.com/sensu/sensu-admin), a web interface fo
 
 ## TESTING
 
-This cookbook comes with a Gemfile, Berksfile, and a Vagrantfile for
-testing and evaluating sensu-admin.
-
+This cookbook uses [test-kitchen](https://github.com/opscode/test-kitchen/). To converge and run tests:
 ```
 gem install bundler
 bundle install
-vagrant up
+bundle exec kitchen verify
 ```
 
-Then hit [https://33.33.33.10/](https://33.33.33.10/) and login as admin@example.com with the password 'secret'.
+Once converged, you may connect to the test-kitchen VM's IP in your browser and login as admin@example.com with the password 'secret'.
 
 ## COOKBOOK DEPENDENCIES
 

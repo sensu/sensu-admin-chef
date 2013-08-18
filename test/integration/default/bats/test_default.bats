@@ -6,6 +6,12 @@
     [ $status -eq 0 ]
 }
 
+@test "crontab entries installed" {
+  run crontab -u sensu-admin -l
+  [ $status -eq 0 ]
+  echo "$output" | grep 'script/rails runner'
+}
+
 @test "starts unicorn" {
   run pgrep -f ^.*unicorn.*$
   [ $status -eq 0 ]

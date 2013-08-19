@@ -1,4 +1,7 @@
 metadata
 site :opscode
 
-cookbook 'ruby'
+group :integration do
+  cookbook 'apt'
+  cookbook 'ruby'
+end

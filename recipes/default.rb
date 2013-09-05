@@ -45,7 +45,8 @@ directory node.sensu.admin.base_path do
   group node.sensu.admin.user
   mode '0755'
   recursive true
-end
+  action :nothing
+end.run_action(:create)
 
 # Otherwise chef is making the child directories owned by root (under recursive true)
 %w{ website
@@ -108,17 +109,20 @@ link "/etc/nginx/sites-enabled/sensu-admin.conf" do
   to "/etc/nginx/sites-available/sensu-admin.conf"
 end
 
-ssl = data_bag_item("sensu", "ssl")
+#ssl = data_bag_item("sensu", "ssl")
 
-file "#{node.sensu.admin.base_path}/server-cert.pem" do
-  content ssl["client"]["cert"]
-  mode 0644
-end
+ssl = SensuAdmin::SSL.new(node.sensu.admin.ssl.subject)
+ssl.generate_cert_and_key(node.sensu.admin.base_path)
 
-file "#{node.sensu.admin.base_path}/server-key.pem" do
-  content ssl["client"]["key"]
-  mode 0600
-end
+#file "#{node.sensu.admin.base_path}/server-cert.pem" do
+#  content ssl["client"]["cert"]
+#  mode 0644
+#end
+#
+#file "#{node.sensu.admin.base_path}/server-key.pem" do
+#  content ssl["client"]["key"]
+#  mode 0600
+#end
 
 deploy_revision "sensu-admin" do
   action :deploy

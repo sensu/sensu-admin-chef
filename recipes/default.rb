@@ -151,8 +151,10 @@ deploy_revision "sensu-admin" do
       mode "0600"
       only_if "test -f #{release_path}/db/production.sqlite3"
     end
+  end
+  before_restart do
     execute "bundle exec whenever --update-crontab" do
-      cwd release_path
+      cwd ::File.join(node.sensu.admin.base_path,'website','current')
       user node.sensu.admin.user
     end
   end

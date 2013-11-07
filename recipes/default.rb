@@ -21,7 +21,25 @@
 # If this is important to you - BACK IT UP, or use a SQL DB thats already backed up for you.
 #
 
-package "git"
+# deal with some platform specific stuff 
+# - start of getting rhel/centos & fedora working
+case node['platform_family']
+when "debian"
+  if node['platform'] == "ubuntu" && node['platform_version'].to_f < 10.10
+    package "git-core"
+  else
+    package "git"
+  end
+when "rhel","fedora"
+  case node['platform_version'].to_i
+  when 5
+    include_recipe "yum::epel"
+  end
+  package "git"
+else
+  package "git"
+end
+
 package "sqlite3"
 package "libsqlite3-dev"
 

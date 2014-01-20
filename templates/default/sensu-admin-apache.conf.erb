@@ -4,7 +4,7 @@
 <VirtualHost *:<%= @http_port -%>>
   ServerName <%= @host %>
             
-  Redirect / https://<%= @host %>/
+  Redirect / https://<%= @hostip %>/
 </VirtualHost>
 
 <VirtualHost *:<%= @https_port -%>>

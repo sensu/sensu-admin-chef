@@ -33,12 +33,12 @@ suites:
 - name: default
   run_list:
   - recipe[ruby::1.9.1]
-  - recipe[sensu-admin]
+  - recipe[sensu-admin_test]
   attributes: {}
 - name: apache
   run_list:
   - recipe[ruby::1.9.1]
-  - recipe[sensu-admin]
+  - recipe[sensu-admin_test]
   attributes: 
     sensu: 
       admin: 

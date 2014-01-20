@@ -40,6 +40,7 @@ template "#{node.sensu.admin.base_path}/sensu-admin-apache.conf" do
   group node.sensu.admin.user
   source "sensu-admin-apache.conf.erb"
   variables(:host => node.sensu.admin.host,
+            :hostip => node.ipaddress,
             :base_path => node.sensu.admin.base_path,
             :http_port => node.sensu.admin.http_port,
             :https_port => node.sensu.admin.https_port,

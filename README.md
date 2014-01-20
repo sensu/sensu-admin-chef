@@ -28,7 +28,23 @@ For ease of use with Vagrant, example ssl data is included in the data_bags dire
 
 ### sensu-admin::default
 
-Installs sensu-admin rails app running on unicorn, front-ended by an nginx proxy.
+Installs sensu-admin rails app running on unicorn, front-ended by an nginx or apache proxy.
+
+### sensu-admin::nginx.rb        
+
+Install nginx as frontend http server (default)
+
+### sensu-admin::apache.rb       
+
+Install apache as frontend http server instead of nginx (see attribute below)
+
+### sensu-admin::deploy.rb       
+
+Deploy sensu admin code from github repo
+
+### sensu-admin::unicorn.rb
+
+Setup unicorn configuration and init scripts for sensu-admin
 
 ## ATTRIBUTES
 
@@ -49,6 +65,8 @@ Installs sensu-admin rails app running on unicorn, front-ended by an nginx proxy
 `node.sensu.admin.release` - specifies revision of sensu-admin to deploy
 
 `node.sensu.admin.base_path` - path where sensu-admin will be deployed, defaults to '/opt/sensu/admin'
+
+`node.sensu.admin.frontend` - 'nginx', 'apache' or 'none' for user facing http - defaults to 'nginx'. 'none' does not install a frontend which could allow for integration with othe existing frontend proxys.
 
 ## TODO
 

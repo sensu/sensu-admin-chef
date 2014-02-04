@@ -22,7 +22,11 @@ Once converged, you may connect to the test-kitchen VM's IP in your browser and 
 
 ### SSL configuration
 
-For ease of use with Vagrant, example ssl data is included in the data_bags directory. Please don't use this certificate in a live environment.
+You can either generate a self-signed certificate by leaving `node.sensu.admin.ssl.generate`
+as `true`, or you can use the data bag example.
+
+For ease of use with Vagrant, example ssl data is included in the data_bags directory. 
+Please don't use this certificate in a live environment.
 
 ## RECIPES
 
@@ -49,6 +53,10 @@ Installs sensu-admin rails app running on unicorn, front-ended by an nginx proxy
 `node.sensu.admin.release` - specifies revision of sensu-admin to deploy
 
 `node.sensu.admin.base_path` - path where sensu-admin will be deployed, defaults to '/opt/sensu/admin'
+
+`node.sensu.admin.ssl.generate` - whether or not to generate SSL certificates for nginx. defaults to `true`
+
+`node.sensu.admin.ssl.subject` - info used when generating the SSL certificate.
 
 ## TODO
 

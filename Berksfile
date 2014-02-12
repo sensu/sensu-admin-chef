@@ -3,6 +3,7 @@ site :opscode
 
 group :integration do
   cookbook 'apt'
+  cookbook 'yum'
   cookbook 'ruby'
 end
 

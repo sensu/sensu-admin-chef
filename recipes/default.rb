@@ -52,9 +52,10 @@ else
   package "git"
 end
 
-
-# bundle install fails unless the mysql c libraries are available
-include_recipe "mysql::ruby"
+if node[:sensu][:admin][:sql] == "mysql"
+  # bundle install fails unless the mysql c libraries are available
+  include_recipe "mysql::ruby"
+end
 
 user node.sensu.admin.user do
   home node.sensu.admin.base_path

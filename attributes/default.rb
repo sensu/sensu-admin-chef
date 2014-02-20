@@ -9,3 +9,4 @@ default.sensu.admin.repo = "https://github.com/sensu/sensu-admin.git"
 default.sensu.admin.release = "v0.0.7" # Version locked, if you want the latest use development, if you want some stability use master. YMMV.
 default.sensu.admin.base_path = "/opt/sensu/admin" # Omnibus sensu lives here
 default.sensu.admin.frontend = "nginx" # nginx or apache for user facing http
+default.sensu.admin.sql = "sqlite" # sqlite or mysql

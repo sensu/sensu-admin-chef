@@ -25,12 +25,18 @@
 # - start of getting rhel/centos & fedora working
 case node['platform_family']
 when "debian"
+  package "sqlite3"
+  package "libsqlite3-dev"
+
   if node['platform'] == "ubuntu" && node['platform_version'].to_f < 10.10
     package "git-core"
   else
     package "git"
   end
 when "rhel","fedora"
+  package "sqlite"
+  package "sqlite-devel"
+
   case node['platform_version'].to_i
   when 5
     include_recipe "yum::epel"
@@ -40,8 +46,6 @@ else
   package "git"
 end
 
-package "sqlite3"
-package "libsqlite3-dev"
 
 # bundle install fails unless the mysql c libraries are available
 include_recipe "mysql::ruby"

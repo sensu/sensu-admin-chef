@@ -1,4 +1,8 @@
 #!/bin/sh
+# sensu-admin - this script starts and stops the unicorn of sensu-admin
+#
+# chkconfig:   - 85 15
+# description: sensu-admin
 set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=<%= @base_path %>

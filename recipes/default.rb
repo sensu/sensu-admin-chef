@@ -25,6 +25,9 @@
 # - start of getting rhel/centos & fedora working
 case node['platform_family']
 when "debian"
+  # eventmachine need gcc-c++
+  package "g++"
+
   package "sqlite3"
   package "libsqlite3-dev"
 
@@ -34,6 +37,9 @@ when "debian"
     package "git"
   end
 when "rhel","fedora"
+  # eventmachine need gcc-c++
+  package "gcc-c++"
+
   package "sqlite"
   package "sqlite-devel"
 

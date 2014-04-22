@@ -68,6 +68,8 @@ Setup unicorn configuration and init scripts for sensu-admin
 
 `node.sensu.admin.frontend` - 'nginx', 'apache' or 'none' for user facing http - defaults to 'nginx'. 'none' does not install a frontend which could allow for integration with othe existing frontend proxys.
 
+`node.sensu.admin.sql` - 'mysql' or 'sqlite' for Rails use SQL.
+
 ## TODO
 
 * Consider using nginx and/or unicorn cookbooks to configure those components in a more flexible manner.

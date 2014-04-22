@@ -40,11 +40,25 @@ else
   package "git"
 end
 
-package "sqlite3"
-package "libsqlite3-dev"
+# Check SQL
+case node[:sensu][:admin][:sql]
+when "mysql"
+  # bundle install fails unless the mysql c libraries are available
+  include_recipe "mysql::ruby"
+when "sqlite"
 
-# bundle install fails unless the mysql c libraries are available
-include_recipe "mysql::ruby"
+  case node['platform_family']
+  when "debian"
+    package "g++"
+    package "sqlite3"
+    package "libsqlite3-dev"
+  when "rhel","fedora"
+    # eventmachine need gcc-c++
+    package "gcc-c++"
+    package "sqlite"
+    package "sqlite-devel"
+  end
+end
 
 user node.sensu.admin.user do
   home node.sensu.admin.base_path

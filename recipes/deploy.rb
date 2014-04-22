@@ -36,9 +36,16 @@ deploy_revision "sensu-admin" do
   shallow_clone false
   enable_submodules true
   before_migrate do
-    execute "bundle install --path #{node.sensu.admin.base_path}/website/shared/bundle" do
-      user "root"
-      cwd release_path
+    if node[:sensu][:admin][:sql] == "mysql"
+      execute "bundle install --path #{node.sensu.admin.base_path}/website/shared/bundle" do
+        user "root"
+        cwd release_path
+      end
+    else
+      execute "bundle install --without mysql --path #{node.sensu.admin.base_path}/website/shared/bundle" do
+        user "root"
+        cwd release_path
+      end
     end
   end
   before_symlink do

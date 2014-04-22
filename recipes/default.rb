@@ -25,24 +25,12 @@
 # - start of getting rhel/centos & fedora working
 case node['platform_family']
 when "debian"
-  # eventmachine need gcc-c++
-  package "g++"
-
-  package "sqlite3"
-  package "libsqlite3-dev"
-
   if node['platform'] == "ubuntu" && node['platform_version'].to_f < 10.10
     package "git-core"
   else
     package "git"
   end
 when "rhel","fedora"
-  # eventmachine need gcc-c++
-  package "gcc-c++"
-
-  package "sqlite"
-  package "sqlite-devel"
-
   case node['platform_version'].to_i
   when 5
     include_recipe "yum::epel"
@@ -52,9 +40,24 @@ else
   package "git"
 end
 
-if node[:sensu][:admin][:sql] == "mysql"
+# Check SQL
+case node[:sensu][:admin][:sql]
+when "mysql"
   # bundle install fails unless the mysql c libraries are available
   include_recipe "mysql::ruby"
+when "sqlite"
+
+  case node['platform_family']
+  when "debian"
+    package "g++"
+    package "sqlite3"
+    package "libsqlite3-dev"
+  when "rhel","fedora"
+    # eventmachine need gcc-c++
+    package "gcc-c++"
+    package "sqlite"
+    package "sqlite-devel"
+  end
 end
 
 user node.sensu.admin.user do

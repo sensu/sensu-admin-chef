@@ -44,7 +44,8 @@ package "sqlite3"
 package "libsqlite3-dev"
 
 # bundle install fails unless the mysql c libraries are available
-include_recipe "mysql::ruby"
+include_recipe "mysql-chef_gem::default"
+
 
 user node.sensu.admin.user do
   home node.sensu.admin.base_path

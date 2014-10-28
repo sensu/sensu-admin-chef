@@ -11,7 +11,7 @@ recipe            "sensu-admin", "installs nginx and sensu-admin"
   supports os
 end
 
-%w{ mysql }.each do |cb|
+%w{ mysql-chef_gem }.each do |cb|
   depends cb
 end
 

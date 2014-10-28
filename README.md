@@ -15,7 +15,7 @@ Once converged, you may connect to the test-kitchen VM's IP in your browser and 
 
 ## COOKBOOK DEPENDENCIES
 
-* [mysql](http://community.opscode.com/cookbooks/mysql) - mysql::ruby recipe required to satisify mysql2 gem prerequisites
+* [mysql-chef_gem](http://community.opscode.com/cookbooks/mysql-chef_gem) - mysql-chef_gem::default recipe required to satisify mysql2 gem prerequisites
 * [ruby](http://community.opscode.com/cookbooks/ruby) - only used by Vagrantfile
 
 ## REQUIREMENTS

@@ -2,6 +2,8 @@
 
 Installs [sensu-admin](https://github.com/sensu/sensu-admin), a web interface for the Sensu API.
 
+**NOTE: sensu-admin has not been updated to support sensu >= 0.14.0; as a result this cookbook has become deprecated and is not likely to recieve updates. You may wish to consider using [uchiwa-chef](https://github.com/sensu/uchiwa-chef) to install [uchiwa](https://uchiwa.io) instead.**
+
 ## TESTING
 
 This cookbook uses [test-kitchen](https://github.com/opscode/test-kitchen/). To converge and run tests:
@@ -15,7 +17,7 @@ Once converged, you may connect to the test-kitchen VM's IP in your browser and 
 
 ## COOKBOOK DEPENDENCIES
 
-* [mysql](http://community.opscode.com/cookbooks/mysql) - mysql::ruby recipe required to satisify mysql2 gem prerequisites
+* [mysql-chef_gem](http://community.opscode.com/cookbooks/mysql-chef_gem) - mysql-chef_gem::default recipe required to satisify mysql2 gem prerequisites
 * [ruby](http://community.opscode.com/cookbooks/ruby) - only used by Vagrantfile
 
 ## REQUIREMENTS
@@ -30,15 +32,15 @@ For ease of use with Vagrant, example ssl data is included in the data_bags dire
 
 Installs sensu-admin rails app running on unicorn, front-ended by an nginx or apache proxy.
 
-### sensu-admin::nginx.rb        
+### sensu-admin::nginx.rb
 
 Install nginx as frontend http server (default)
 
-### sensu-admin::apache.rb       
+### sensu-admin::apache.rb
 
 Install apache as frontend http server instead of nginx (see attribute below)
 
-### sensu-admin::deploy.rb       
+### sensu-admin::deploy.rb
 
 Deploy sensu admin code from github repo
 
@@ -67,13 +69,3 @@ Setup unicorn configuration and init scripts for sensu-admin
 `node.sensu.admin.base_path` - path where sensu-admin will be deployed, defaults to '/opt/sensu/admin'
 
 `node.sensu.admin.frontend` - 'nginx', 'apache' or 'none' for user facing http - defaults to 'nginx'. 'none' does not install a frontend which could allow for integration with othe existing frontend proxys.
-
-## TODO
-
-* Consider using nginx and/or unicorn cookbooks to configure those components in a more flexible manner.
-
-* Instrument database configuration (allow choice of sqlite, mysql, etc.)
-
-* Run bundler with --without-mysql when using sqlite (then we can skip including mysql::ruby recipe)
-
-* Use LWRPs from database cookbook to configure database when using mysql or similar, and configure the app for that case

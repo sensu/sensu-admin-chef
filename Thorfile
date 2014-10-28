@@ -2,6 +2,6 @@
 
 require 'bundler'
 require 'bundler/setup'
-require 'thor/foodcritic'
 require 'berkshelf/thor'
+require 'emeril/thor'
 

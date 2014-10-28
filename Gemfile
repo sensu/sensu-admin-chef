@@ -14,9 +14,8 @@ group :integration do
 end
 
 group :release do
-  gem 'stove', '~> 1.1'
-  gem 'rspec_junit_formatter'
-  gem 'rubocop-checkstyle_formatter'
+  gem 'emeril'
+  gem 'thor'
 end
 
 group :development do
